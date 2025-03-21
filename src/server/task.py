@@ -56,7 +56,7 @@ class SessionController:
             "waiting_for_env": waiting_for_env,
             "waiting_for_agent": waiting_for_agent,
             "env_input": self.env_input,
-            "env_output": self.env_output.dict(),
+            "env_output": self.env_output.model_dump(),
         }
 
 

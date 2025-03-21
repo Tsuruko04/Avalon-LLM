@@ -110,7 +110,7 @@ class AvalonGameEnvironment():
     - quest_leader (int): The id of the quest leader
     """
     def __init__(self, config: AvalonBasicConfig) -> None:
-        for key, value in config.dict().items():
+        for key, value in config.model_dump().items():
             setattr(self, key, value)
 
         self.config = config
@@ -456,7 +456,7 @@ if __name__ == "__main__":
     env = AvalonGameEnvironment.from_num_players(5)
 
     print(env.get_role(0))
-    # print(config.dict())
+    # print(config.model_dump())
     # print(env.roles)
     # print(env.is_good)
     # print(config.ROLES)

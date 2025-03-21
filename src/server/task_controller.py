@@ -368,7 +368,7 @@ class TaskController:
                 session.name,
                 session.worker_id,
                 "/interact",
-                data.dict(),
+                data.model_dump(),
             )
 
             if "output" not in result:
@@ -420,7 +420,7 @@ class TaskController:
                 session.name,
                 session.worker_id,
                 "/cancel",
-                data.dict(),
+                data.model_dump(),
                 timeout=5,
             )
             await self._finish_session(data.session_id)
@@ -454,7 +454,7 @@ class TaskController:
                 data.name,
                 target_worker.id,
                 "/calculate_overall",
-                data.dict(),
+                data.model_dump(),
             )
 
             return result

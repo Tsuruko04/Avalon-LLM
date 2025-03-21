@@ -55,7 +55,7 @@ class TaskClient:
         try:
             result = requests.post(
                 self.controller_address + "/start_sample",
-                json=StartSampleRequest(name=self.name, index=index).dict(),
+                json=StartSampleRequest(name=self.name, index=index).model_dump(),
             )
         except Exception as e:
             return TaskClientOutput(error=TaskError.NETWORK_ERROR.value, info=str(e))
@@ -86,7 +86,7 @@ class TaskClient:
                 print(f"ERROR: {model_name}/{self.name} agent error", e)
                 requests.post(
                     self.controller_address + "/cancel",
-                    json=CancelRequest(session_id=sid).dict(),
+                    json=CancelRequest(session_id=sid).model_dump(),
                 )
                 return TaskClientOutput(
                     error=TaskError.AGENT_FAILED.value,
@@ -100,7 +100,7 @@ class TaskClient:
                     json=InteractRequest(
                         session_id=sid,
                         agent_response=response,
-                    ).dict(),
+                    ).model_dump(),
                 )
             except Exception as e:
                 return TaskClientOutput(
@@ -111,7 +111,7 @@ class TaskClient:
             if result.status_code != 200:
                 requests.post(
                     self.controller_address + "/cancel",
-                    json=CancelRequest(session_id=sid).dict(),
+                    json=CancelRequest(session_id=sid).model_dump(),
                 )
                 return TaskClientOutput(
                     error=TaskError.INTERACT_FAILED.value,
@@ -145,7 +145,7 @@ class TaskClient:
         }
         res = requests.post(
             self.controller_address + "/calculate_overall",
-            json=CalculateOverallRequest(name=self.name, results=results).dict(),
+            json=CalculateOverallRequest(name=self.name, results=results).model_dump(),
         )
         if res.status_code != 200:
             raise TaskNetworkException(res.text)
